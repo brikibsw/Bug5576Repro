@@ -67,8 +67,6 @@ namespace Bug5576Repro
         {
             Console.WriteLine($"linq2db {typeof(DataConnection).Assembly.GetName().Version}");
 
-            // Connection string: pass as the first CLI arg, or set L2DB_CS, otherwise this default.
-            // The repro only creates/drops one small [Campaign] table. Any SQL Server database works.
             var cs = args.Length > 0 ? args[0]
                 : Environment.GetEnvironmentVariable("L2DB_CS")
                 ?? "Server=localhost,14333;Database=l2db_b2;User Id=sa;Password=Replay!Dev2026x;TrustServerCertificate=true;Encrypt=false";
