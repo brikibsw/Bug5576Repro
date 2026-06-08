@@ -69,7 +69,13 @@ namespace Bug5576Repro
 
             var cs = args.Length > 0 ? args[0]
                 : Environment.GetEnvironmentVariable("L2DB_CS")
-                ?? "Server=localhost,14333;Database=l2db_b2;User Id=sa;Password=Replay!Dev2026x;TrustServerCertificate=true;Encrypt=false";
+                ?? "Server=localhost,1433;Database=tempdb;User Id=sa;Password=<your password>;TrustServerCertificate=true;Encrypt=false";
+
+            if (cs.Contains("<your password>"))
+            {
+                Console.Error.WriteLine("Set a SQL Server connection string: pass it as the first argument or set the L2DB_CS environment variable.");
+                return 2;
+            }
 
             using var db = new DataConnection(
                 new DataOptions().UseSqlServer(cs, SqlServerVersion.v2022, SqlServerProvider.MicrosoftDataSqlClient));
